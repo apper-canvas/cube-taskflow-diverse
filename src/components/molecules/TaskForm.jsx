@@ -108,7 +108,7 @@ const handleChange = (e) => {
             className="mt-1"
           >
             <option value="">Select a category</option>
-            {categories.map(category => (
+{categories.map(category => (
               <option key={category.Id} value={category.Id}>
                 {category.name}
               </option>

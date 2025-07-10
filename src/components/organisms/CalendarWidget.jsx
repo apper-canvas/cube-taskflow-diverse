@@ -44,7 +44,7 @@ const CalendarWidget = ({
   // Group tasks by date
   const tasksByDate = useMemo(() => {
     const grouped = {};
-    tasks.forEach(task => {
+tasks.forEach(task => {
       if (task.dueDate) {
         try {
           const date = parseISO(task.dueDate);

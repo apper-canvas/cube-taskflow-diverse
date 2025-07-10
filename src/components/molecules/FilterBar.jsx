@@ -27,7 +27,7 @@ const FilterBar = ({
         <label className="text-sm font-medium text-gray-700 mb-1">Category</label>
         <Select value={categoryFilter} onChange={onCategoryChange}>
           <option value="all">All Categories</option>
-          {categories.map(category => (
+{categories.map(category => (
             <option key={category.Id} value={category.Id}>
               {category.name}
             </option>

@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
+import { useSelector } from 'react-redux';
+import { AuthContext } from '../../App';
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
 
 const Header = () => {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      await logout();
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -24,9 +36,27 @@ const Header = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-600">
-              Stay productive, stay focused
-            </div>
+            {isAuthenticated && user && (
+              <>
+                <div className="text-sm text-gray-600">
+                  Welcome, {user.firstName || user.emailAddress}
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2"
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4" />
+                  <span>Logout</span>
+                </Button>
+              </>
+            )}
+            {!isAuthenticated && (
+              <div className="text-sm text-gray-600">
+                Stay productive, stay focused
+              </div>
+            )}
           </div>
         </div>
       </div>

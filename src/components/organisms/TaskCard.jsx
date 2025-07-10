@@ -20,7 +20,7 @@ const TaskCard = ({ task, category, onToggle, onEdit, onDelete }) => {
     onDelete(task.Id);
   };
 
-  const isOverdue = task.dueDate && isPast(new Date(task.dueDate)) && !task.completed;
+const isOverdue = task.dueDate && isPast(new Date(task.dueDate)) && !task.completed;
   const isDueToday = task.dueDate && isToday(new Date(task.dueDate));
 
   return (

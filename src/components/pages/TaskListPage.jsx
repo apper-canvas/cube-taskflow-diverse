@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import TaskList from "@/components/organisms/TaskList";
+import CalendarWidget from "@/components/organisms/CalendarWidget";
 import CategorySidebar from "@/components/organisms/CategorySidebar";
 import TaskModal from "@/components/organisms/TaskModal";
 import SearchBar from "@/components/molecules/SearchBar";
@@ -15,13 +16,14 @@ const TaskListPage = () => {
   const { tasks, loading, error, createTask, updateTask, deleteTask, toggleTaskCompletion, loadTasks } = useTasks();
   const { categories } = useCategories();
   
-  const [searchQuery, setSearchQuery] = useState("");
+const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [viewMode, setViewMode] = useState("list"); // "list" or "calendar"
 
   const filteredTasks = useMemo(() => {
     return tasks.filter(task => {
@@ -163,7 +165,7 @@ const TaskListPage = () => {
             transition={{ duration: 0.3 }}
             className="bg-white rounded-lg shadow-md p-6"
           >
-            {/* Header */}
+{/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">Tasks</h2>
@@ -171,10 +173,37 @@ const TaskListPage = () => {
                   {filteredTasks.length} of {tasks.length} tasks
                 </p>
               </div>
-              <Button onClick={handleOpenModal} className="mt-4 sm:mt-0">
-                <ApperIcon name="Plus" className="w-4 h-4 mr-2" />
-                Add Task
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+                {/* View Toggle */}
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                      viewMode === "list"
+                        ? "bg-white text-gray-900 shadow-sm"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    <ApperIcon name="List" className="w-4 h-4 mr-1.5 inline" />
+                    List
+                  </button>
+                  <button
+                    onClick={() => setViewMode("calendar")}
+                    className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                      viewMode === "calendar"
+                        ? "bg-white text-gray-900 shadow-sm"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    <ApperIcon name="Calendar" className="w-4 h-4 mr-1.5 inline" />
+                    Calendar
+                  </button>
+                </div>
+                <Button onClick={handleOpenModal}>
+                  <ApperIcon name="Plus" className="w-4 h-4 mr-2" />
+                  Add Task
+                </Button>
+              </div>
             </div>
 
             {/* Search and Filters */}
@@ -195,17 +224,30 @@ const TaskListPage = () => {
               />
             </div>
 
-            {/* Task List */}
-            <TaskList
-              tasks={filteredTasks}
-              loading={loading}
-              error={error}
-              categories={categories}
-              onTaskToggle={handleToggleTask}
-              onTaskEdit={handleEditTask}
-              onTaskDelete={handleDeleteTask}
-              onRetry={loadTasks}
-            />
+{/* Task Content */}
+            {viewMode === "list" ? (
+              <TaskList
+                tasks={filteredTasks}
+                loading={loading}
+                error={error}
+                categories={categories}
+                onTaskToggle={handleToggleTask}
+                onTaskEdit={handleEditTask}
+                onTaskDelete={handleDeleteTask}
+                onRetry={loadTasks}
+              />
+            ) : (
+              <CalendarWidget
+                tasks={filteredTasks}
+                loading={loading}
+                error={error}
+                categories={categories}
+                onTaskToggle={handleToggleTask}
+                onTaskEdit={handleEditTask}
+                onTaskDelete={handleDeleteTask}
+                onRetry={loadTasks}
+              />
+            )}
           </motion.div>
         </div>
       </div>

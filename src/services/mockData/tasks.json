@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "title": "Complete quarterly financial report",
+    "description": "Prepare and submit the Q4 financial analysis report for the board meeting",
+    "categoryId": "1",
+    "priority": "high",
+    "dueDate": "2024-12-20T17:00:00Z",
+    "completed": false,
+    "createdAt": "2024-12-10T09:00:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 2,
+    "title": "Schedule team meeting",
+    "description": "Organize weekly team sync to discuss project progress and roadmap",
+    "categoryId": "2",
+    "priority": "medium",
+    "dueDate": "2024-12-18T14:00:00Z",
+    "completed": false,
+    "createdAt": "2024-12-10T10:30:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 3,
+    "title": "Update project documentation",
+    "description": "Review and update API documentation for the new feature release",
+    "categoryId": "3",
+    "priority": "medium",
+    "dueDate": "2024-12-22T18:00:00Z",
+    "completed": false,
+    "createdAt": "2024-12-10T11:15:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 4,
+    "title": "Buy groceries",
+    "description": "Weekly grocery shopping - milk, bread, vegetables, and protein",
+    "categoryId": "4",
+    "priority": "low",
+    "dueDate": "2024-12-17T19:00:00Z",
+    "completed": true,
+    "createdAt": "2024-12-10T12:00:00Z",
+    "completedAt": "2024-12-15T18:30:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Review code pull requests",
+    "description": "Review and approve pending PRs from the development team",
+    "categoryId": "3",
+    "priority": "high",
+    "dueDate": "2024-12-16T16:00:00Z",
+    "completed": false,
+    "createdAt": "2024-12-10T13:45:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 6,
+    "title": "Plan weekend trip",
+    "description": "Research and book accommodation for the weekend getaway",
+    "categoryId": "4",
+    "priority": "low",
+    "dueDate": "2024-12-19T20:00:00Z",
+    "completed": false,
+    "createdAt": "2024-12-10T14:20:00Z",
+    "completedAt": null
+  }
+]

@@ -18,26 +18,42 @@ export const taskService = {
     return task ? { ...task } : null;
   },
 
-  async createTask(taskData) {
+async createTask(taskData) {
     await delay(300);
     const newTask = {
       ...taskData,
       Id: Math.max(...tasks.map(t => t.Id)) + 1,
       completed: false,
       createdAt: new Date().toISOString(),
-      completedAt: null
+      completedAt: null,
+      isRecurring: taskData.isRecurring || false,
+      recurrencePattern: taskData.recurrencePattern || null,
+      recurrenceStartDate: taskData.recurrenceStartDate || null,
+      recurrenceEndDate: taskData.recurrenceEndDate || null,
+      specificDays: taskData.specificDays || []
     };
     tasks.push(newTask);
     await this.updateCategoryCount(newTask.categoryId);
     return { ...newTask };
   },
 
-  async updateTask(id, updates) {
+async updateTask(id, updates) {
     await delay(250);
     const index = tasks.findIndex(task => task.Id === parseInt(id));
     if (index !== -1) {
       const oldCategoryId = tasks[index].categoryId;
-      tasks[index] = { ...tasks[index], ...updates };
+      
+      // Ensure recurring fields are properly updated
+      const updatedData = {
+        ...updates,
+        isRecurring: updates.isRecurring !== undefined ? updates.isRecurring : tasks[index].isRecurring,
+        recurrencePattern: updates.recurrencePattern !== undefined ? updates.recurrencePattern : tasks[index].recurrencePattern,
+        recurrenceStartDate: updates.recurrenceStartDate !== undefined ? updates.recurrenceStartDate : tasks[index].recurrenceStartDate,
+        recurrenceEndDate: updates.recurrenceEndDate !== undefined ? updates.recurrenceEndDate : tasks[index].recurrenceEndDate,
+        specificDays: updates.specificDays !== undefined ? updates.specificDays : tasks[index].specificDays
+      };
+      
+      tasks[index] = { ...tasks[index], ...updatedData };
       
       // Update category counts if category changed
       if (oldCategoryId !== updates.categoryId) {
